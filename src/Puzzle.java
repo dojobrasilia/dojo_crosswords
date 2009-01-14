@@ -24,28 +24,10 @@ public class Puzzle {
 			for (int i = 0; i < semEspacos.length(); i++) {
 				resultado.append("#####");
 			}
-			resultado.append("\n");
-			resultado.append('#');
-			for (int i = 0; i < semEspacos.length(); i++) {
-
-				if (semEspacos.charAt(i) == 'X') {
-					resultado.append("#####");
-				} else {
-					resultado.append("    #");
-				}
-			}
-
 			resultado.append('\n');
-			resultado.append('#');
-			for (int i = 0; i < semEspacos.length(); i++) {
+			preencheLinha(semEspacos, resultado);
 
-				if (semEspacos.charAt(i) == 'X') {
-					resultado.append("#####");
-				} else {
-					resultado.append("    #");
-				}
-			}
-			resultado.append('\n');
+			preencheLinha(semEspacos, resultado);
 			
 			
 		}
@@ -55,6 +37,20 @@ public class Puzzle {
 		}
 		resultado.append("\n");
 		return resultado.toString();
+	}
+	
+	public void preencheLinha(String semEspacos, StringBuffer resultado) {
+		
+		resultado.append('#');
+		for (int i = 0; i < semEspacos.length(); i++) {
+
+			if (semEspacos.charAt(i) == 'X') {
+				resultado.append("#####");
+			} else {
+				resultado.append("    #");
+			}
+		}
+		resultado.append('\n');
 	}
 
 }
