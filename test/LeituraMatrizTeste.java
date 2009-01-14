@@ -136,7 +136,7 @@ public class LeituraMatrizTeste {
 	}
 	
 	@Test
-	public void testMatriz101_010() {
+	public void testMatriz0000_0000() {
 		String esperado = "#####################\n"+
 						  "#    #    #    #    #\n"+
 						  "#    #    #    #    #\n"+
@@ -148,6 +148,44 @@ public class LeituraMatrizTeste {
 		Puzzle puzzle = new Puzzle();
 		puzzle.loadGrid(" _ _ _ _ \n" +
 						" _ _ _ _\n");
+		
+		Assert.assertEquals(esperado, puzzle.getCrosswords());
+	}
+	
+	@Test
+	public void testMatriz0000_1001() {
+		String esperado = "#####################\n"+
+						  "#    #    #    #    #\n"+
+						  "#    #    #    #    #\n"+
+					      "#####################\n"+
+						  "######    #    ######\n"+
+						  "######    #    ######\n"+
+					      "#####################\n";
+		
+		Puzzle puzzle = new Puzzle();
+		puzzle.loadGrid(" _ _ _ _ \n" +
+						" X _ _ X\n");
+		
+		Assert.assertEquals(esperado, puzzle.getCrosswords());
+	}
+	
+	@Test
+	public void testMatriz0000_1001_1001() {
+		String esperado = "#####################\n"+
+						  "#    #    #    #    #\n"+
+						  "#    #    #    #    #\n"+
+					      "#####################\n"+
+						  "######    #    ######\n"+
+						  "######    #    ######\n"+
+					      "#####################\n"+
+						  "######    #    ######\n"+
+						  "######    #    ######\n"+
+						  "#####################\n";
+		
+		Puzzle puzzle = new Puzzle();
+		puzzle.loadGrid(" _ _ _ _ \n" +
+						" X _ _ X\n" +
+						" X _ _ X\n");
 		
 		Assert.assertEquals(esperado, puzzle.getCrosswords());
 	}
