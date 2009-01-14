@@ -64,4 +64,56 @@ public class LeituraMatrizTeste {
 		Assert.assertEquals(esperado, puzzle.getCrosswords());
 	}
 
+	@Test
+	public void testMatriz101() {
+		String esperado = "################\n"+
+						  "######    ######\n"+
+						  "######    ######\n"+
+						  "################\n";
+		
+		Puzzle puzzle = new Puzzle();
+		puzzle.loadGrid("X _ X");
+		
+		Assert.assertEquals(esperado, puzzle.getCrosswords());
+	}
+	
+	@Test
+	public void testMatriz0101() {
+		String esperado = "#####################\n"+
+						  "#    ######    ######\n"+
+						  "#    ######    ######\n"+
+					      "#####################\n";
+		
+		Puzzle puzzle = new Puzzle();
+		puzzle.loadGrid("_ X _ X");
+		
+		Assert.assertEquals(esperado, puzzle.getCrosswords());
+	}
+	
+	@Test
+	public void testMatriz1111() {
+		String esperado = "#####################\n"+
+						  "#####################\n"+
+						  "#####################\n"+
+					      "#####################\n";
+		
+		Puzzle puzzle = new Puzzle();
+		puzzle.loadGrid("X X X X");
+		
+		Assert.assertEquals(esperado, puzzle.getCrosswords());
+	}
+	
+	@Test
+	public void testMatriz0000() {
+		String esperado = "#####################\n"+
+						  "#    #    #    #    #\n"+
+						  "#    #    #    #    #\n"+
+					      "#####################\n";
+		
+		Puzzle puzzle = new Puzzle();
+		puzzle.loadGrid(" _ _ _ _ ");
+		
+		Assert.assertEquals(esperado, puzzle.getCrosswords());
+	}
+	
 }
