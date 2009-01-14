@@ -116,4 +116,23 @@ public class LeituraMatrizTeste {
 		Assert.assertEquals(esperado, puzzle.getCrosswords());
 	}
 	
+	@Test
+	public void testMatriz10_01() {
+		String esperado = "###########\n"+
+						  "######    #\n"+
+						  "######    #\n"+
+					      "###########\n"+
+						  "#    ######\n"+
+						  "#    ######\n"+
+					      "###########\n";
+		
+		
+		
+		Puzzle puzzle = new Puzzle();
+		puzzle.loadGrid("X _ \n"
+					   +"_ X \n");
+		
+		Assert.assertEquals(puzzle.getCrosswords()+"", esperado, puzzle.getCrosswords());
+	}
+	
 }
