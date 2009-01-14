@@ -16,28 +16,37 @@ public class Puzzle {
 	public Object getCrosswords() {
 
 		String[] linhas = contents.replaceAll(" ","").split("\n");
+		
 		// tira os espaços
 		StringBuffer resultado = new StringBuffer();
+		
 		for (int x=0; x<linhas.length; x++){
-			String semEspacos = linhas[x]; 
+			
+			//preenche a coluna da esquerda
 			resultado.append('#');
-			for (int i = 0; i < semEspacos.length(); i++) {
+			
+			for (int i = 0; i < linhas[x].length(); i++) {
 				resultado.append("#####");
 			}
-			resultado.append('\n');
-			preencheLinha(semEspacos, resultado);
-
-			preencheLinha(semEspacos, resultado);
 			
+			
+			resultado.append('\n');
+			preencheLinha(linhas[x], resultado);
+			preencheLinha(linhas[x], resultado);
 			
 		}
+		preenncheBordaInferior(linhas[0].length(), resultado);
+		return resultado.toString();
+	}
+
+	private void preenncheBordaInferior(int qtdColunas, StringBuffer resultado) {
 		resultado.append('#');
-		for (int i = 0; i < linhas[0].length(); i++) {
+		for (int i = 0; i < qtdColunas; i++) {
 			resultado.append("#####");
 		}
 		resultado.append("\n");
-		return resultado.toString();
 	}
+	
 	
 	public void preencheLinha(String semEspacos, StringBuffer resultado) {
 		
