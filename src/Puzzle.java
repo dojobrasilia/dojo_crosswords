@@ -72,6 +72,14 @@ public class Puzzle {
 		linhas[0]=linhas[0].replace("X", "B");
 		linhas[linhas.length-1] = linhas[linhas.length-1].replace("X", "B");
 		
+		for (int i = 1; i < linhas.length - 1; i++) {
+			for (int j = 0; j < linhas[i].length(); j++) {
+				if (linhas[i-1].charAt(j) == 'B') {
+					//Paramos aqui.
+					linhas[i].toCharArray()[j] = 'B';
+				}
+			}
+		}
 		
 		String retorno = linhas[0];
 		for (int i = 1; i < linhas.length; i++) {
