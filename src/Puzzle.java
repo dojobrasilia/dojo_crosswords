@@ -66,6 +66,7 @@ public class Puzzle {
 		contents = contents.replace(" ", "");
 		contents = contents.replace("X\n", "B\n").replaceAll("\\n\\s*X", "\nB");
 		contents = contents.replace("XB", "BB");
+		contents = contents.replace("BX", "BB");
 		
 		String[] linhas = contents.split("\n");
 		linhas[0]=linhas[0].replace("X", "B");
