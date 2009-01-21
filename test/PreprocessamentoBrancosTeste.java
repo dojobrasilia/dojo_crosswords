@@ -76,6 +76,26 @@ public class PreprocessamentoBrancosTeste {
 		Assert.assertEquals(esperado, preprocessado);
 		
 	}
+	
+	@Test
+	public void testeCinco() {
+		
+		Puzzle puzzle = new Puzzle();
+		puzzle.loadGrid(" _ _ _ _\n" +
+						" _ X _ _\n" +
+						" _ X _ _\n" +
+						" _ _ X _\n");
+		
+		String preprocessado = puzzle.preProcessGrid();
+		
+		String esperado = "____\n" +
+						  "_X__\n" +
+						  "_X__\n" +
+						  "__B_\n";
+		
+		Assert.assertEquals(esperado, preprocessado);
+		
+	}
 }
 
 
