@@ -62,4 +62,20 @@ public class Puzzle {
 		resultado.append('\n');
 	}
 
+	public String preProcessGrid() {
+		contents = contents.replace(" ", "");
+		contents = contents.replace("X\n", "B\n").replaceAll("\\n\\s*X", "\nB");
+		
+		String[] linhas = contents.split("\n");
+		linhas[0]=linhas[0].replace("X", "B");
+		
+		return linhas[0]+linhas[1]+linhas[2]+linhas[3]; 
+	}
+
 }
+
+
+
+
+
+
