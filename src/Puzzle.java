@@ -68,6 +68,7 @@ public class Puzzle {
 		
 		String[] linhas = contents.split("\n");
 		linhas[0]=linhas[0].replace("X", "B");
+		linhas[2] = linhas[2].replace("X", "B");
 		
 		return linhas[0]+"\n"+linhas[1]+"\n"+linhas[2]+"\n"; 
 	}
