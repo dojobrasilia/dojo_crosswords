@@ -75,8 +75,16 @@ public class Puzzle {
 		for (int i = 1; i < linhas.length - 1; i++) {
 			for (int j = 0; j < linhas[i].length(); j++) {
 				if (linhas[i].charAt(j) == 'X' && linhas[i-1].charAt(j) == 'B') {
-					char[] linha = linhas[i].toCharArray(); // = 'B';
+					char[] linha = linhas[i].toCharArray();
 					linha[j] =  'B';
+					linhas[i] = new String(linha);
+				}
+				if (linhas[i].charAt(j) == 'B' && linhas[i].length() > (j+1) &&
+						  linhas[i].charAt(j+1) == 'X'){
+					
+					char[] linha = linhas[i].toCharArray();
+					linha[j] =  'B';
+					linha[j+1] = 'B';
 					linhas[i] = new String(linha);
 				}
 			}

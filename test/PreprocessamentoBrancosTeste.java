@@ -197,6 +197,26 @@ public class PreprocessamentoBrancosTeste {
 		
 	}
 	
+	@Test
+	public void testeOnze() {
+		
+		Puzzle puzzle = new Puzzle();
+		puzzle.loadGrid(" _ X X _\n" +
+						" _ X _ _\n" +
+						" _ X X _\n" +
+						" _ _ _ _\n");
+		
+		String preprocessado = puzzle.preProcessGrid();
+		
+		String esperado = "_BB_\n" +
+						  "_B__\n" +
+						  "_BB_\n" +
+						  "____\n";
+		
+		Assert.assertEquals(esperado, preprocessado);
+		
+	}
+	
 }
 
 
