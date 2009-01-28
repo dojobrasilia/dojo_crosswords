@@ -77,23 +77,33 @@ public class Puzzle {
 		char[][] tabuleiro = montarTabuleiro(linhas);
 		
 		
-		for (int i = 1; i < linhas.length - 1; i++) {
-			for (int j = 0; j < linhas[i].length(); j++) {
+		for (int i = 1; i < tabuleiro.length - 1; i++) {
+			for (int j = 1; j < tabuleiro[i].length-1; j++) {
 				
 				// vizinho de cima Ž B
 				if (tabuleiro[i][j] == 'X' && tabuleiro[i-1][j] == 'B') {
 					tabuleiro[i][j] = 'B';
 				}
 				
-				// vizinho aa esquerda
+				// vizinho aa direita
 				if (tabuleiro[i][j] == 'X' && tabuleiro[i][j+1] == 'B') {
 					tabuleiro[i][j] = 'B';
 				}
 				
-				// vizinho aa direita
+				// vizinho aa esquerda
 				if (tabuleiro[i][j] == 'X' && tabuleiro[i][j-1] == 'B') {
 					tabuleiro[i][j] = 'B';
 				}
+			
+			}
+			
+			for (int j = tabuleiro[i].length-1; j > 0; j--) {
+
+				// vizinho aa direita
+				if (tabuleiro[i][j] == 'X' && tabuleiro[i][j+1] == 'B') {
+					tabuleiro[i][j] = 'B';
+				}
+			
 			}
 		}
 		

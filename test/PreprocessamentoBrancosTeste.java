@@ -217,6 +217,66 @@ public class PreprocessamentoBrancosTeste {
 		
 	}
 	
+	@Test
+	public void testeDoze() {
+		
+		Puzzle puzzle = new Puzzle();
+		puzzle.loadGrid(" _ X X _\n" +
+						" _ _ _ _\n" +
+						" _ X X _\n" +
+						" _ _ _ _\n");
+		
+		String preprocessado = puzzle.preProcessGrid();
+		
+		String esperado = "_BB_\n" +
+						  "____\n" +
+						  "_XX_\n" +
+						  "____\n";
+		
+		Assert.assertEquals(esperado, preprocessado);
+		
+	}
+	
+	@Test
+	public void testeTreze() {
+		
+		Puzzle puzzle = new Puzzle();
+		puzzle.loadGrid(" _ X X _\n" +
+						" _ _ _ _\n" +
+						" X X X _\n" +
+						" _ _ _ _\n");
+		
+		String preprocessado = puzzle.preProcessGrid();
+		
+		String esperado = "_BB_\n" +
+						  "____\n" +
+						  "BBB_\n" +
+						  "____\n";
+		
+		Assert.assertEquals(esperado, preprocessado);
+		
+	}
+	
+	@Test
+	public void testeQuatorze() {
+		
+		Puzzle puzzle = new Puzzle();
+		puzzle.loadGrid(" _ X X _\n" +
+						" _ _ _ _\n" +
+						" _ X X X\n" +
+						" _ _ _ _\n");
+		
+		String preprocessado = puzzle.preProcessGrid();
+		
+		String esperado = "_BB_\n" +
+						  "____\n" +
+						  "_BBB\n" +
+						  "____\n";
+		
+		Assert.assertEquals(esperado, preprocessado);
+		
+	}
+	
 }
 
 
