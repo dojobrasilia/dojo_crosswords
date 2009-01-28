@@ -64,32 +64,53 @@ public class Puzzle {
 
 	public String preProcessGrid() {
 		contents = contents.replace(" ", "");
-		contents = contents.replace("X\n", "B\n").replaceAll("\\n\\s*X", "\nB");
-		contents = contents.replace("XB", "BB");
+		
+		// troca os X's na borda da direita e da esquerda
+		contents = contents.replace("X\n", "B\n").replaceAll("\\nX", "\nB");
 		
 		String[] linhas = contents.split("\n");
 		
+		// troca X por B na primeira e na œltima linha
 		linhas[0]=linhas[0].replace("X", "B");
 		linhas[linhas.length-1] = linhas[linhas.length-1].replace("X", "B");
 		
-		char[][] tabuleiro = new char[linhas.length][];
-		for (int i = 0; i < linhas.length; i++) {
-			tabuleiro[i]=linhas[i].toCharArray();
-		}
+		char[][] tabuleiro = montarTabuleiro(linhas);
 		
 		
 		for (int i = 1; i < linhas.length - 1; i++) {
 			for (int j = 0; j < linhas[i].length(); j++) {
+				
+				// vizinho de cima Ž B
 				if (tabuleiro[i][j] == 'X' && tabuleiro[i-1][j] == 'B') {
 					tabuleiro[i][j] = 'B';
 				}
 				
+				// vizinho aa esquerda
+				if (tabuleiro[i][j] == 'X' && tabuleiro[i][j+1] == 'B') {
+					tabuleiro[i][j] = 'B';
+				}
+				
+				// vizinho aa direita
 				if (tabuleiro[i][j] == 'X' && tabuleiro[i][j-1] == 'B') {
 					tabuleiro[i][j] = 'B';
 				}
 			}
 		}
 		
+		return montarResultado(tabuleiro);
+	}
+
+	private char[][] montarTabuleiro(String[] linhas) {
+		// monta o tabuleiro de char[][]
+		char[][] tabuleiro = new char[linhas.length][];
+		for (int i = 0; i < linhas.length; i++) {
+			tabuleiro[i]=linhas[i].toCharArray();
+		}
+		return tabuleiro;
+	}
+
+	private String montarResultado(char[][] tabuleiro) {
+		// monta a string de sa’da
 		StringBuffer retorno = new StringBuffer();
 		for (int i = 0; i < tabuleiro.length; i++){
 			for (int j = 0 ; j < tabuleiro[0].length ; j++){
@@ -97,8 +118,7 @@ public class Puzzle {
 			}
 			retorno.append('\n');
 		}
-		
-		return retorno.toString(); 
+		return retorno.toString();
 	}
 
 }
