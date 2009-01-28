@@ -66,36 +66,39 @@ public class Puzzle {
 		contents = contents.replace(" ", "");
 		contents = contents.replace("X\n", "B\n").replaceAll("\\n\\s*X", "\nB");
 		contents = contents.replace("XB", "BB");
-		contents = contents.replace("BX", "BB");
 		
 		String[] linhas = contents.split("\n");
+		
 		linhas[0]=linhas[0].replace("X", "B");
 		linhas[linhas.length-1] = linhas[linhas.length-1].replace("X", "B");
 		
+		char[][] tabuleiro = new char[linhas.length][];
+		for (int i = 0; i < linhas.length; i++) {
+			tabuleiro[i]=linhas[i].toCharArray();
+		}
+		
+		
 		for (int i = 1; i < linhas.length - 1; i++) {
 			for (int j = 0; j < linhas[i].length(); j++) {
-				if (linhas[i].charAt(j) == 'X' && linhas[i-1].charAt(j) == 'B') {
-					char[] linha = linhas[i].toCharArray();
-					linha[j] =  'B';
-					linhas[i] = new String(linha);
+				if (tabuleiro[i][j] == 'X' && tabuleiro[i-1][j] == 'B') {
+					tabuleiro[i][j] = 'B';
 				}
-				if (linhas[i].charAt(j) == 'B' && linhas[i].length() > (j+1) &&
-						  linhas[i].charAt(j+1) == 'X'){
-					
-					char[] linha = linhas[i].toCharArray();
-					linha[j] =  'B';
-					linha[j+1] = 'B';
-					linhas[i] = new String(linha);
+				
+				if (tabuleiro[i][j] == 'X' && tabuleiro[i][j-1] == 'B') {
+					tabuleiro[i][j] = 'B';
 				}
 			}
 		}
 		
-		String retorno = linhas[0];
-		for (int i = 1; i < linhas.length; i++) {
-			retorno=retorno+"\n"+linhas[i];
+		StringBuffer retorno = new StringBuffer();
+		for (int i = 0; i < tabuleiro.length; i++){
+			for (int j = 0 ; j < tabuleiro[0].length ; j++){
+				retorno.append(tabuleiro[i][j]);
+			}
+			retorno.append('\n');
 		}
 		
-		return retorno+"\n"; 
+		return retorno.toString(); 
 	}
 
 }
