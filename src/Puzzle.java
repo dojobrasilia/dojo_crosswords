@@ -103,7 +103,19 @@ public class Puzzle {
 				if (tabuleiro[i][j] == 'X' && tabuleiro[i][j+1] == 'B') {
 					tabuleiro[i][j] = 'B';
 				}
-			
+				
+			}
+
+		}
+		
+		for (int i = tabuleiro.length - 1; i > 0; i--) {
+			for (int j = tabuleiro[i].length-1; j > 0; j--) {
+
+				// vizinho de baixo
+				if (tabuleiro[i][j] == 'X' && tabuleiro[i+1][j] == 'B') {
+					tabuleiro[i][j] = 'B';
+				}
+				
 			}
 		}
 		
