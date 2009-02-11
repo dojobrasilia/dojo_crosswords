@@ -63,16 +63,16 @@ public class Puzzle {
 	}
 
 	public String preProcessGrid() {
-		contents = contents.replace(" ", "");
-
-		// troca os X's na borda da direita e da esquerda
-		contents = contents.replace("X\n", "B\n").replaceAll("\\nX", "\nB");
+//		contents = contents.replace(" ", "");
+//
+//		// troca os X's na borda da direita e da esquerda
+//		contents = contents.replace("X\n", "B\n").replaceAll("\\nX", "\nB");
 
 		String[] linhas = contents.split("\n");
 
-		// troca X por B na primeira e na œltima linha
-		linhas[0]=linhas[0].replace("X", "B");
-		linhas[linhas.length-1] = linhas[linhas.length-1].replace("X", "B");
+//		// troca X por B na primeira e na œltima linha
+//		linhas[0]=linhas[0].replace("X", "B");
+//		linhas[linhas.length-1] = linhas[linhas.length-1].replace("X", "B");
 
 		char[][] tabuleiro = montarTabuleiro(linhas);
 
@@ -82,9 +82,10 @@ public class Puzzle {
 		//recursivo
 		//primeira linha
 		for (int x = 0; x < maxCol; x++) {
-			if (tabuleiro[0][x] == 'B') {
-				verificaVizinhos(0, x, tabuleiro);
-			}
+			mudarParaBranco(tabuleiro, 0, x);
+//			if (tabuleiro[0][x] == 'B') {
+//				verificaVizinhos(0, x, tabuleiro);
+//			}
 		}
 
 		//ultima linha
@@ -109,6 +110,18 @@ public class Puzzle {
 		}
 
 		return montarResultado(tabuleiro);
+	}
+
+	private void mudarParaBranco(char[][] tabuleiro, int linha, int coluna) {
+		if (tabuleiro[linha][coluna] == 'X' && (linha == 0 || linha == tabuleiro.length || coluna == 0 || coluna == tabuleiro[0].length)){
+			tabuleiro[linha][coluna] = 'B';
+			for (int i = linha-1; i <= linha+1; i++) {
+				for (int j = coluna-1; j <= coluna+1; j++) {
+					mudaParaBranco(tabuleiro, i, j);
+				}
+			}
+		}
+		
 	}
 
 	private void verificaVizinhos(int linha, int coluna, char [][] tabuleiro) {
