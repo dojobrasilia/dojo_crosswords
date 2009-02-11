@@ -83,80 +83,59 @@ public class Puzzle {
 		//primeira linha
 		for (int x = 0; x < maxCol; x++) {
 				if (tabuleiro[0][x] == 'B') {
-					verificaVizinhos(0, x);
+					verificaVizinhos(0, x, tabuleiro);
 				}
 		}
 		
 		//ultima linha
 		for (int x = 0; x < maxCol; x++) {
 			if (tabuleiro[maxLin][x] == 'B') {
-				verificaVizinhos(maxLin, x);
+				verificaVizinhos(maxLin, x, tabuleiro);
 			}
 		}
 		
 		//primeira coluna
 		for (int x = 0; x < maxLin; x++) {
 			if (tabuleiro[x][0] == 'B') {
-				verificaVizinhos(x, 0);
+				verificaVizinhos(x, 0, tabuleiro);
 			}
 		}
 		
 		//ultima coluna
 		for (int x = 0; x < maxLin; x++) {
 			if (tabuleiro[x][maxCol] == 'B') {
-				verificaVizinhos(x, maxCol);
-			}
-		}
-		
-		
-		for (int i = 1; i < tabuleiro.length - 1; i++) {
-			for (int j = 1; j < tabuleiro[i].length-1; j++) {
-				
-				// vizinho de cima Ž B
-				if (tabuleiro[i][j] == 'X' && tabuleiro[i-1][j] == 'B') {
-					tabuleiro[i][j] = 'B';
-				}
-				
-				// vizinho aa direita
-				if (tabuleiro[i][j] == 'X' && tabuleiro[i][j+1] == 'B') {
-					tabuleiro[i][j] = 'B';
-				}
-				
-				// vizinho aa esquerda
-				if (tabuleiro[i][j] == 'X' && tabuleiro[i][j-1] == 'B') {
-					tabuleiro[i][j] = 'B';
-				}
-			
-			}
-			
-			for (int j = tabuleiro[i].length-1; j > 0; j--) {
-
-				// vizinho aa direita
-				if (tabuleiro[i][j] == 'X' && tabuleiro[i][j+1] == 'B') {
-					tabuleiro[i][j] = 'B';
-				}
-				
-			}
-
-		}
-		
-		for (int i = tabuleiro.length - 1; i > 0; i--) {
-			for (int j = tabuleiro[i].length-1; j > 0; j--) {
-
-				// vizinho de baixo
-				if (tabuleiro[i][j] == 'X' && tabuleiro[i+1][j] == 'B') {
-					tabuleiro[i][j] = 'B';
-				}
-				
+				verificaVizinhos(x, maxCol, tabuleiro);
 			}
 		}
 		
 		return montarResultado(tabuleiro);
 	}
 
-	private void verificaVizinhos(int x, int j) {
+	private void verificaVizinhos(int x, int y, char [][] tabuleiro) {
 		
-		
+		//Verifica direita
+		if (y+1 < tabuleiro[x].length && tabuleiro[x][y+1] == 'X') {
+			tabuleiro[x][y+1] = 'B';
+			verificaVizinhos (x, y+1, tabuleiro);
+		}
+
+		//Verifica esquerda
+		if (y-1 > 0 && tabuleiro[x][y-1] == 'X') {
+			tabuleiro[x][y-1] = 'B';
+			verificaVizinhos (x, y-1, tabuleiro);
+		}
+
+		//Verifica embaixo
+		if (x+1 < tabuleiro.length && tabuleiro[x+1][y] == 'X') {
+			tabuleiro[x+1][y] = 'B';
+			verificaVizinhos (x+1, y, tabuleiro);
+		}
+
+		//Verifica "cima"
+		if (x-1 > 0 && tabuleiro[x-1][y] == 'X') {
+			tabuleiro[x-1][y] = 'B';
+			verificaVizinhos (x-1, y, tabuleiro);
+		}
 	}
 
 	private char[][] montarTabuleiro(String[] linhas) {
