@@ -76,6 +76,38 @@ public class Puzzle {
 		
 		char[][] tabuleiro = montarTabuleiro(linhas);
 		
+		int maxLin = tabuleiro.length - 1;
+		int maxCol = tabuleiro[0].length - 1;
+		
+		//recursivo
+		//primeira linha
+		for (int x = 0; x < maxCol; x++) {
+				if (tabuleiro[0][x] == 'B') {
+					verificaVizinhos(0, x);
+				}
+		}
+		
+		//ultima linha
+		for (int x = 0; x < maxCol; x++) {
+			if (tabuleiro[maxLin][x] == 'B') {
+				verificaVizinhos(maxLin, x);
+			}
+		}
+		
+		//primeira coluna
+		for (int x = 0; x < maxLin; x++) {
+			if (tabuleiro[x][0] == 'B') {
+				verificaVizinhos(x, 0);
+			}
+		}
+		
+		//ultima coluna
+		for (int x = 0; x < maxLin; x++) {
+			if (tabuleiro[x][maxCol] == 'B') {
+				verificaVizinhos(x, maxCol);
+			}
+		}
+		
 		
 		for (int i = 1; i < tabuleiro.length - 1; i++) {
 			for (int j = 1; j < tabuleiro[i].length-1; j++) {
@@ -120,6 +152,11 @@ public class Puzzle {
 		}
 		
 		return montarResultado(tabuleiro);
+	}
+
+	private void verificaVizinhos(int x, int j) {
+		
+		
 	}
 
 	private char[][] montarTabuleiro(String[] linhas) {
