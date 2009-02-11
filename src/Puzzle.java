@@ -16,24 +16,24 @@ public class Puzzle {
 	public Object getCrosswords() {
 
 		String[] linhas = contents.replaceAll(" ","").split("\n");
-		
+
 		// tira os espaços
 		StringBuffer resultado = new StringBuffer();
-		
+
 		for (int x=0; x<linhas.length; x++){
-			
+
 			//preenche a coluna da esquerda
 			resultado.append('#');
-			
+
 			for (int i = 0; i < linhas[x].length(); i++) {
 				resultado.append("#####");
 			}
-			
-			
+
+
 			resultado.append('\n');
 			preencheLinha(linhas[x], resultado);
 			preencheLinha(linhas[x], resultado);
-			
+
 		}
 		preenncheBordaInferior(linhas[0].length(), resultado);
 		return resultado.toString();
@@ -46,10 +46,10 @@ public class Puzzle {
 		}
 		resultado.append("\n");
 	}
-	
-	
+
+
 	public void preencheLinha(String semEspacos, StringBuffer resultado) {
-		
+
 		resultado.append('#');
 		for (int i = 0; i < semEspacos.length(); i++) {
 
@@ -64,77 +64,77 @@ public class Puzzle {
 
 	public String preProcessGrid() {
 		contents = contents.replace(" ", "");
-		
+
 		// troca os X's na borda da direita e da esquerda
 		contents = contents.replace("X\n", "B\n").replaceAll("\\nX", "\nB");
-		
+
 		String[] linhas = contents.split("\n");
-		
+
 		// troca X por B na primeira e na última linha
 		linhas[0]=linhas[0].replace("X", "B");
 		linhas[linhas.length-1] = linhas[linhas.length-1].replace("X", "B");
-		
+
 		char[][] tabuleiro = montarTabuleiro(linhas);
-		
+
 		int maxLin = tabuleiro.length - 1;
 		int maxCol = tabuleiro[0].length - 1;
-		
+
 		//recursivo
 		//primeira linha
 		for (int x = 0; x < maxCol; x++) {
-				if (tabuleiro[0][x] == 'B') {
-					verificaVizinhos(0, x, tabuleiro);
-				}
+			if (tabuleiro[0][x] == 'B') {
+				verificaVizinhos(0, x, tabuleiro);
+			}
 		}
-		
+
 		//ultima linha
 		for (int x = 0; x < maxCol; x++) {
 			if (tabuleiro[maxLin][x] == 'B') {
 				verificaVizinhos(maxLin, x, tabuleiro);
 			}
 		}
-		
+
 		//primeira coluna
 		for (int x = 0; x < maxLin; x++) {
 			if (tabuleiro[x][0] == 'B') {
 				verificaVizinhos(x, 0, tabuleiro);
 			}
 		}
-		
+
 		//ultima coluna
 		for (int x = 0; x < maxLin; x++) {
 			if (tabuleiro[x][maxCol] == 'B') {
 				verificaVizinhos(x, maxCol, tabuleiro);
 			}
 		}
-		
+
 		return montarResultado(tabuleiro);
 	}
 
-	private void verificaVizinhos(int x, int y, char [][] tabuleiro) {
-		
+	private void verificaVizinhos(int linha, int coluna, char [][] tabuleiro) {
+
 		//Verifica direita
-		if (y+1 < tabuleiro[x].length && tabuleiro[x][y+1] == 'X') {
-			tabuleiro[x][y+1] = 'B';
-			verificaVizinhos (x, y+1, tabuleiro);
+		if (coluna+1 < tabuleiro[linha].length && tabuleiro[linha][coluna+1] == 'X') {
+			tabuleiro[linha][coluna+1] = 'B';
+			verificaVizinhos (linha, coluna+1, tabuleiro);
 		}
 
 		//Verifica esquerda
-		if (y-1 > 0 && tabuleiro[x][y-1] == 'X') {
-			tabuleiro[x][y-1] = 'B';
-			verificaVizinhos (x, y-1, tabuleiro);
+		if (coluna-1 > 0 && tabuleiro[linha][coluna-1] == 'X') {
+			tabuleiro[linha][coluna-1] = 'B';
+			verificaVizinhos (linha, coluna-1, tabuleiro);
 		}
 
 		//Verifica embaixo
-		if (x+1 < tabuleiro.length && tabuleiro[x+1][y] == 'X') {
-			tabuleiro[x+1][y] = 'B';
-			verificaVizinhos (x+1, y, tabuleiro);
+		if (linha+1 < tabuleiro.length && tabuleiro[linha+1][coluna] == 'X') {
+			tabuleiro[linha+1][coluna] = 'B';
+			verificaVizinhos (linha+1, coluna, tabuleiro);
 		}
 
 		//Verifica "cima"
-		if (x-1 > 0 && tabuleiro[x-1][y] == 'X') {
-			tabuleiro[x-1][y] = 'B';
-			verificaVizinhos (x-1, y, tabuleiro);
+		if (linha-1 > 0 && tabuleiro[linha-1][coluna] == 'X') {
+			tabuleiro[linha-1][coluna] = 'B';
+			verificaVizinhos (linha-1, coluna, tabuleiro);
 		}
 	}
 
