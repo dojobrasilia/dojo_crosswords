@@ -337,6 +337,28 @@ public class PreprocessamentoBrancosTeste {
 		
 	}
 	
+	@Test
+	public void testeDezoito() {
+		
+		Puzzle puzzle = new Puzzle();
+		puzzle.loadGrid(" X _ X X X\n" +
+						" X _ X _ X\n" +
+						" X _ X X X\n" +
+						" X _ _ _ X\n" +
+						" X X X X X\n");
+		
+		String preprocessado = puzzle.preProcessGrid();
+		
+		String esperado = "B_BBB\n" +
+						  "B_B_B\n" +
+						  "B_BBB\n" + 
+						  "B___B\n" +
+						  "BBBBB\n";
+		
+		Assert.assertEquals(esperado, preprocessado);
+		
+	}
+	
 }
 
 
