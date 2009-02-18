@@ -21,12 +21,18 @@ public class Puzzle {
 		StringBuffer resultado = new StringBuffer();
 
 		for (int x=0; x<linhas.length; x++){
-
-			//preenche a coluna da esquerda
-			resultado.append('#');
+			if (linhas[x].charAt(0) != 'B')
+				//preenche a coluna da esquerda
+				resultado.append('#');
+			else
+				resultado.append(' ');
 
 			for (int i = 0; i < linhas[x].length(); i++) {
-				resultado.append("#####");
+				if (linhas[x].charAt(i) != 'B')
+					resultado.append("#####");
+				else
+					resultado.append("     ");
+				
 			}
 
 
@@ -49,15 +55,26 @@ public class Puzzle {
 
 
 	public void preencheLinha(String semEspacos, StringBuffer resultado) {
-
-		resultado.append('#');
+		if (semEspacos.charAt(0) != 'B'){
+			resultado.append('#');
+		}
+		
 		for (int i = 0; i < semEspacos.length(); i++) {
-
-			if (semEspacos.charAt(i) == 'X') {
-				resultado.append("#####");
-			} else {
-				resultado.append("    #");
+			if (semEspacos.charAt(i) != 'B'){
+				resultado.append('#');
 			}
+			
+			if (semEspacos.charAt(i) == 'X') {
+				resultado.append("####");
+			
+			
+			} else {
+				resultado.append("    ");
+			}
+			
+//			if (semEspacos.charAt(i) != 'B'){
+//				resultado.append('#');
+//			}
 		}
 		resultado.append('\n');
 	}
