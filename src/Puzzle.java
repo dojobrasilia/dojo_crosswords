@@ -29,11 +29,18 @@ public class Puzzle {
 
 			for (int i = 0; i < linhas[x].length(); i++) {
 				if (linhas[x].charAt(i) != 'B')
-					resultado.append("#####");
+					resultado.append("####");
 				else
-					resultado.append("     ");
+					resultado.append("    ");
+				
+				if (linhas[x].charAt(i) != 'B' ||
+				   (i+1 < linhas[x].length() && linhas[x].charAt(i+1) != 'B'))
+					resultado.append("#");
+				else
+					resultado.append(" ");
 				
 			}
+			
 
 
 			resultado.append('\n');
@@ -54,9 +61,15 @@ public class Puzzle {
 		int qtdColunas = linha.length();
 		for (int i = 0; i < qtdColunas; i++) {
 			if (linha.charAt(i) != 'B')
-				resultado.append("#####");
+				resultado.append("####");
 			else
-				resultado.append("     ");
+				resultado.append("    ");
+			
+			if (linha.charAt(i) != 'B' ||
+			   (i+1 < linha.length() && linha.charAt(i+1) != 'B'))
+				resultado.append("#");
+			else
+				resultado.append(" ");
 		}
 		resultado.append("\n");
 	}
@@ -81,7 +94,8 @@ public class Puzzle {
 				resultado.append("    ");
 			}
 			
-			if (semEspacos.charAt(i) != 'B'){
+			if (semEspacos.charAt(i) != 'B' ||
+			   (i+1 < semEspacos.length() && semEspacos.charAt(i+1) != 'B')){
 				resultado.append('#');
 			}else{
 				resultado.append(" ");

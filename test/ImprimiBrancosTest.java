@@ -32,4 +32,19 @@ public class ImprimiBrancosTest {
 		Assert.assertEquals(expected,puzzle.getCrosswords());
 		
 	}
+	
+	@Test
+	public void testaMatrizComMatrizEntreDoisBrancos(){
+		String expected = "     ######     \n"+
+        				  "     ######     \n"+
+        				  "     ######     \n"+
+        				  "     ######     \n";
+		Puzzle puzzle= new Puzzle();
+		puzzle.loadGrid("B X B");
+		
+		System.out.println(puzzle.getCrosswords().replace(' ', '.'));
+		
+		Assert.assertEquals(expected,puzzle.getCrosswords());
+		
+	}
 }
