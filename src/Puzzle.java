@@ -21,35 +21,37 @@ public class Puzzle {
 		StringBuffer resultado = new StringBuffer();
 
 		for (int x=0; x<linhas.length; x++){
-			if (linhas[x].charAt(0) != 'B')
-				//preenche a coluna da esquerda
-				resultado.append('#');
-			else
-				resultado.append(' ');
-
-			for (int i = 0; i < linhas[x].length(); i++) {
-				if (linhas[x].charAt(i) != 'B')
-					resultado.append("####");
-				else
-					resultado.append("    ");
-				
-				if (linhas[x].charAt(i) != 'B' ||
-				   (i+1 < linhas[x].length() && linhas[x].charAt(i+1) != 'B'))
-					resultado.append("#");
-				else
-					resultado.append(" ");
-				
-			}
 			
-
-
-			resultado.append('\n');
+			preencheBordaSuperior(linhas[x], resultado);
 			preencheLinha(linhas[x], resultado);
 			preencheLinha(linhas[x], resultado);
 
 		}
 		preenncheBordaInferior(linhas[0], resultado);
 		return resultado.toString();
+	}
+
+	private void preencheBordaSuperior(String linha, StringBuffer resultado) {
+		if (linha.charAt(0) != 'B')
+			//preenche a coluna da esquerda
+			resultado.append('#');
+		else
+			resultado.append(' ');
+
+		for (int i = 0; i < linha.length(); i++) {
+			if (linha.charAt(i) != 'B')
+				resultado.append("####");
+			else
+				resultado.append("    ");
+			
+			if (linha.charAt(i) != 'B' ||
+			   (i+1 < linha.length() && linha.charAt(i+1) != 'B'))
+				resultado.append("#");
+			else
+				resultado.append(" ");
+			
+		}
+		resultado.append('\n');
 	}
 
 	private void preenncheBordaInferior(String linha, StringBuffer resultado) {
@@ -60,6 +62,7 @@ public class Puzzle {
 		}
 		int qtdColunas = linha.length();
 		for (int i = 0; i < qtdColunas; i++) {
+			//System.out.print(i);
 			if (linha.charAt(i) != 'B')
 				resultado.append("####");
 			else
@@ -71,6 +74,7 @@ public class Puzzle {
 			else
 				resultado.append(" ");
 		}
+		System.out.print("de");
 		resultado.append("\n");
 	}
 

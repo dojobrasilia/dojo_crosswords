@@ -47,4 +47,24 @@ public class ImprimiBrancosTest {
 		Assert.assertEquals(expected,puzzle.getCrosswords());
 		
 	}
+
+	@Test
+	public void testaMatrizComMatrizBrancoAcima(){
+		String expected = "      \n"+
+        				  "      \n"+
+        				  "      \n"+
+        				  "######\n"+
+        				  "######\n"+
+        				  "######\n"+
+        				  "######\n";
+		Puzzle puzzle= new Puzzle();
+		puzzle.loadGrid(" B \n" +
+				        " X ");
+		
+		System.out.println(puzzle.getCrosswords().replace(' ', '.'));
+		
+		Assert.assertEquals(expected,puzzle.getCrosswords());
+		
+	}
+
 }
