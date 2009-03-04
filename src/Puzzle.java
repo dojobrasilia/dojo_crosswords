@@ -17,7 +17,7 @@ public class Puzzle {
 
 		String[] linhas = contents.replaceAll(" ","").split("\n");
 
-		// tira os espaos
+		// tira os espaï¿½os
 		StringBuffer resultado = new StringBuffer();
 
 		for (int x=0; x<linhas.length; x++){
@@ -41,14 +41,18 @@ public class Puzzle {
 			preencheLinha(linhas[x], resultado);
 
 		}
-		preenncheBordaInferior(linhas[0].length(), resultado);
+		preenncheBordaInferior(linhas[0], resultado);
 		return resultado.toString();
 	}
 
-	private void preenncheBordaInferior(int qtdColunas, StringBuffer resultado) {
+	private void preenncheBordaInferior(String linha, StringBuffer resultado) {
 		resultado.append('#');
+		int qtdColunas = linha.length();
 		for (int i = 0; i < qtdColunas; i++) {
-			resultado.append("#####");
+			if (linha.charAt(i) != 'B')
+				resultado.append("#####");
+			else
+				resultado.append("     ");
 		}
 		resultado.append("\n");
 	}
@@ -60,21 +64,22 @@ public class Puzzle {
 		}
 		
 		for (int i = 0; i < semEspacos.length(); i++) {
-			if (semEspacos.charAt(i) != 'B'){
-				resultado.append('#');
-			}
+			//if (semEspacos.charAt(i) != 'B'){
+				//resultado.append('#');
+			//}
 			
 			if (semEspacos.charAt(i) == 'X') {
 				resultado.append("####");
-			
 			
 			} else {
 				resultado.append("    ");
 			}
 			
-//			if (semEspacos.charAt(i) != 'B'){
-//				resultado.append('#');
-//			}
+			if (semEspacos.charAt(i) != 'B'){
+				resultado.append('#');
+			}else{
+				resultado.append(" ");
+			}
 		}
 		resultado.append('\n');
 	}
@@ -158,7 +163,7 @@ public class Puzzle {
 	}
 
 	private String montarResultado(char[][] tabuleiro) {
-		// monta a string de sa’da
+		// monta a string de saï¿½da
 		StringBuffer retorno = new StringBuffer();
 		for (int i = 0; i < tabuleiro.length; i++){
 			for (int j = 0 ; j < tabuleiro[0].length ; j++){
