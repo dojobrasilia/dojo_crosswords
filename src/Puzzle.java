@@ -13,7 +13,7 @@ public class Puzzle {
 		contents = grid;		
 	}
 
-	public Object getCrosswords() {
+	public String getCrosswords() {
 
 		String[] linhas = contents.replaceAll(" ","").split("\n");
 
@@ -46,7 +46,11 @@ public class Puzzle {
 	}
 
 	private void preenncheBordaInferior(String linha, StringBuffer resultado) {
-		resultado.append('#');
+		if (linha.charAt(0) != 'B') {
+			resultado.append('#');			
+		} else {
+			resultado.append(' ');		
+		}
 		int qtdColunas = linha.length();
 		for (int i = 0; i < qtdColunas; i++) {
 			if (linha.charAt(i) != 'B')
@@ -61,6 +65,8 @@ public class Puzzle {
 	public void preencheLinha(String semEspacos, StringBuffer resultado) {
 		if (semEspacos.charAt(0) != 'B'){
 			resultado.append('#');
+		} else {
+			resultado.append(' ');	
 		}
 		
 		for (int i = 0; i < semEspacos.length(); i++) {
