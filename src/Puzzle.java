@@ -27,7 +27,8 @@ public class Puzzle {
 			preencheLinha(linhas[x], resultado);
 
 		}
-		preenncheBordaInferior(linhas[0], resultado);
+
+		preenncheBordaInferior(linhas[linhas.length-1], resultado);
 		return resultado.toString();
 	}
 
@@ -55,26 +56,32 @@ public class Puzzle {
 	}
 
 	private void preenncheBordaInferior(String linha, StringBuffer resultado) {
+		System.out.println(linha);
+		// cantinho
 		if (linha.charAt(0) != 'B') {
 			resultado.append('#');			
 		} else {
 			resultado.append(' ');		
 		}
+		
 		int qtdColunas = linha.length();
 		for (int i = 0; i < qtdColunas; i++) {
-			//System.out.print(i);
 			if (linha.charAt(i) != 'B')
 				resultado.append("####");
 			else
 				resultado.append("    ");
 			
-			if (linha.charAt(i) != 'B' ||
-			   (i+1 < linha.length() && linha.charAt(i+1) != 'B'))
+			
+			//quando acaba de printar o bloco
+			//tem que pintar a borda (divisoria)
+			
+			if (linha.charAt(i) != 'B' || (i+1 < linha.length() && linha.charAt(i+1) != 'B' )){
 				resultado.append("#");
-			else
-				resultado.append(" ");
+			} else {
+				resultado.append(' ');
+			}
 		}
-		System.out.print("de");
+		
 		resultado.append("\n");
 	}
 
