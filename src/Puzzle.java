@@ -61,20 +61,20 @@ public class Puzzle {
 		resultado.append("\n");
 	}
 	
-	public void preencheLinha(String semEspacos, StringBuffer resultado) {
+	public void preencheLinha(String linha, StringBuffer resultado) {
 		
-		desenhaCanto(semEspacos, resultado);
+		desenhaCanto(linha, resultado);
 		
-		for (int i = 0; i < semEspacos.length(); i++) {
+		for (int i = 0; i < linha.length(); i++) {
 			
-			if (semEspacos.charAt(i) == 'X') {
+			if (linha.charAt(i) == 'X') {
 				resultado.append("####");
 				
 			} else {
 				resultado.append("    ");
 			}
 			
-			preencheBordaVertical(semEspacos, resultado, i);
+			preencheBordaVertical(linha, resultado, i);
 		}
 		resultado.append('\n');
 	}
