@@ -40,13 +40,13 @@ public class Puzzle {
 			resultado.append(' ');
 
 		for (int i = 0; i < linha.length(); i++) {
-			if (linha.charAt(i) != 'B')
+			if (!isBorda(linha, i))
 				resultado.append("####");
 			else
 				resultado.append("    ");
 			
-			if (linha.charAt(i) != 'B' ||
-			   (i+1 < linha.length() && linha.charAt(i+1) != 'B'))
+			if (!isBorda(linha, i) ||
+			   (existeProximo(linha, i)))
 				resultado.append("#");
 			else
 				resultado.append(" ");
@@ -66,7 +66,7 @@ public class Puzzle {
 		
 		int qtdColunas = linha.length();
 		for (int i = 0; i < qtdColunas; i++) {
-			if (linha.charAt(i) != 'B')
+			if (!isBorda(linha, i))
 				resultado.append("####");
 			else
 				resultado.append("    ");
@@ -74,8 +74,7 @@ public class Puzzle {
 			
 			//quando acaba de printar o bloco
 			//tem que pintar a borda (divisoria)
-			
-			if (linha.charAt(i) != 'B' || (i+1 < linha.length() && linha.charAt(i+1) != 'B' )){
+			if (!isBorda(linha, i) || (existeProximo(linha, i) )){
 				resultado.append("#");
 			} else {
 				resultado.append(' ');
@@ -83,6 +82,14 @@ public class Puzzle {
 		}
 		
 		resultado.append("\n");
+	}
+
+	private boolean isBorda(String linha, int i) {
+		return linha.charAt(i) == 'B';
+	}
+
+	private boolean existeProximo(String linha, int i) {
+		return i+1 < linha.length() && linha.charAt(i+1) != 'B';
 	}
 
 
@@ -105,8 +112,7 @@ public class Puzzle {
 				resultado.append("    ");
 			}
 			
-			if (semEspacos.charAt(i) != 'B' ||
-			   (i+1 < semEspacos.length() && semEspacos.charAt(i+1) != 'B')){
+			if (!isBorda(semEspacos, i) || (existeProximo(semEspacos, i))){
 				resultado.append('#');
 			}else{
 				resultado.append(" ");
