@@ -5,20 +5,28 @@ import org.junit.Test;
 
 public class LeituraMatrizTeste {
 	
+	public static final String GRID1 = "X";
+	public static final String GRID2 = "_";
+	public static final String LINHA1 = "######";
+	public static final String LINHA2 = "#    #";
+	public static final String QUADRADOCHEIO = LINHA1+"\n"+LINHA1+"\n"+LINHA1+"\n"+LINHA1+"\n";
+	public static final String QUADRADOVAZIO = LINHA1+"\n"+LINHA2+"\n"+LINHA2+"\n"+LINHA1+"\n";
+
+	
 	@Test
 	public void testMatriz1x1Cheio(){
 		Puzzle puzzle = new Puzzle();
-		puzzle.loadGrid(Puzzle.GRID1);
+		puzzle.loadGrid(GRID1);
 		
-		Assert.assertEquals(Puzzle.QUADRADOCHEIO, puzzle.getCrosswords());
+		Assert.assertEquals(QUADRADOCHEIO, puzzle.getCrosswords());
 	}
 	
 	@Test
 	public void testMatriz1x1Vazio(){
 		Puzzle puzzle = new Puzzle();
-		puzzle.loadGrid(Puzzle.GRID2);
+		puzzle.loadGrid(GRID2);
 		
-		Assert.assertEquals(Puzzle.QUADRADOVAZIO, puzzle.getCrosswords());
+		Assert.assertEquals(QUADRADOVAZIO, puzzle.getCrosswords());
 	}
 	
 	@Test

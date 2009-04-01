@@ -2,15 +2,8 @@
 public class Puzzle {
 	private String contents;
 
-	public static final String GRID1 = "X";
-	public static final String GRID2 = "_";
-	public static final String LINHA1 = "######";
-	public static final String LINHA2 = "#    #";
-	public static final String QUADRADOCHEIO = LINHA1+"\n"+LINHA1+"\n"+LINHA1+"\n"+LINHA1+"\n";
-	public static final String QUADRADOVAZIO = LINHA1+"\n"+LINHA2+"\n"+LINHA2+"\n"+LINHA1+"\n";
-
 	public void loadGrid(String grid) {
-		contents = grid;		
+		contents = grid;
 	}
 
 	public String getCrosswords() {
@@ -22,103 +15,78 @@ public class Puzzle {
 
 		for (int x=0; x<linhas.length; x++){
 			
-			preencheBordaSuperior(linhas[x], resultado);
+			preencheBordaHorizontal(linhas[x], resultado);
 			preencheLinha(linhas[x], resultado);
 			preencheLinha(linhas[x], resultado);
 
 		}
 
-		preenncheBordaInferior(linhas[linhas.length-1], resultado);
+		preencheBordaHorizontal(linhas[linhas.length-1], resultado);
 		return resultado.toString();
 	}
 
-	private void preencheBordaSuperior(String linha, StringBuffer resultado) {
+	private void desenhaCanto(String linha, StringBuffer resultado) {
 		if (linha.charAt(0) != 'B')
 			//preenche a coluna da esquerda
 			resultado.append('#');
 		else
 			resultado.append(' ');
-
-		for (int i = 0; i < linha.length(); i++) {
-			if (!isBorda(linha, i))
-				resultado.append("####");
-			else
-				resultado.append("    ");
-			
-			if (!isBorda(linha, i) ||
-			   (existeProximo(linha, i)))
-				resultado.append("#");
-			else
-				resultado.append(" ");
-			
-		}
-		resultado.append('\n');
 	}
 
-	private void preenncheBordaInferior(String linha, StringBuffer resultado) {
-		System.out.println(linha);
-		// cantinho
-		if (linha.charAt(0) != 'B') {
-			resultado.append('#');			
-		} else {
-			resultado.append(' ');		
-		}
+
+	private boolean isBranco(String linha, int i) {
+		return linha.charAt(i) == 'B';
+	}
+
+	private boolean proximoExisteENaoEhBranco(String linha, int i) {
+		return i+1 < linha.length() && linha.charAt(i+1) != 'B';
+	}
+
+	private void preencheBordaHorizontal(String linha, StringBuffer resultado) {
+		
+		desenhaCanto(linha, resultado);
 		
 		int qtdColunas = linha.length();
 		for (int i = 0; i < qtdColunas; i++) {
-			if (!isBorda(linha, i))
+			
+			// miolo
+			if (!isBranco(linha, i))
 				resultado.append("####");
 			else
 				resultado.append("    ");
 			
-			
-			//quando acaba de printar o bloco
-			//tem que pintar a borda (divisoria)
-			if (!isBorda(linha, i) || (existeProximo(linha, i) )){
-				resultado.append("#");
-			} else {
-				resultado.append(' ');
-			}
+			preencheBordaVertical(linha, resultado, i);
 		}
 		
 		resultado.append("\n");
 	}
-
-	private boolean isBorda(String linha, int i) {
-		return linha.charAt(i) == 'B';
-	}
-
-	private boolean existeProximo(String linha, int i) {
-		return i+1 < linha.length() && linha.charAt(i+1) != 'B';
-	}
-
-
+	
 	public void preencheLinha(String semEspacos, StringBuffer resultado) {
-		if (semEspacos.charAt(0) != 'B'){
-			resultado.append('#');
-		} else {
-			resultado.append(' ');	
-		}
+		
+		desenhaCanto(semEspacos, resultado);
 		
 		for (int i = 0; i < semEspacos.length(); i++) {
-			//if (semEspacos.charAt(i) != 'B'){
-				//resultado.append('#');
-			//}
 			
 			if (semEspacos.charAt(i) == 'X') {
 				resultado.append("####");
-			
+				
 			} else {
 				resultado.append("    ");
 			}
 			
-			if (!isBorda(semEspacos, i) || (existeProximo(semEspacos, i))){
-				resultado.append('#');
-			}else{
-				resultado.append(" ");
-			}
+			preencheBordaVertical(semEspacos, resultado, i);
 		}
 		resultado.append('\n');
+	}
+
+	private void preencheBordaVertical(String linha, StringBuffer resultado,
+			int i) {
+		// borda (divisoria) desse com o pr—ximo
+		if (!isBranco(linha, i) || (proximoExisteENaoEhBranco(linha, i) )){
+			resultado.append("#");
+		} else {
+			resultado.append(' ');
+		}
 	}
 
 	public String preProcessGrid() {
