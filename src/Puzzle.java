@@ -16,16 +16,24 @@ public class Puzzle {
 		for (int x=0; x<linhas.length; x++){
 
 			preencheBordaHorizontal(linhas, x, resultado);
-			preencheLinha(linhas[x], resultado);
-			preencheLinha(linhas[x], resultado);
+			preencheLinha(linhas, x, resultado);
+			preencheLinha(linhas, x, resultado);
 		}
 
 		preencheBordaHorizontal(linhas, linhas.length-1, resultado);
 		return resultado.toString();
 	}
 
-	private void desenhaCanto(String linha, StringBuffer resultado) {
-		if (linha.charAt(0) != 'B')
+	private void desenhaCanto(String linha[],int indice, StringBuffer resultado) {
+		if (linha[indice].charAt(0) != 'B'  || (indice>0 && linha[indice-1].charAt(0) != 'B'))
+			//preenche a coluna da esquerda
+			resultado.append('#');
+		else
+			resultado.append(' ');
+	}
+	
+	private void desenhaCantoLinha(String linha[],int indice, StringBuffer resultado) {
+		if (linha[indice].charAt(0) != 'B' )
 			//preenche a coluna da esquerda
 			resultado.append('#');
 		else
@@ -42,56 +50,64 @@ public class Puzzle {
 	}
 
 	private void preencheBordaHorizontal(String[] linha, int indice, StringBuffer resultado) {
-		if  (indice == 0) {
-			desenhaCanto(linha[indice], resultado);
+		desenhaCanto(linha, indice, resultado);
 
-			int qtdColunas = linha[indice].length();
+		int qtdColunas = linha[indice].length();
 
-			for (int i = 0; i < qtdColunas; i++) {
+		for (int i = 0; i < qtdColunas; i++) {
 
-				// miolo
-				if (!isBranco(linha[indice], i)){
-					resultado.append("####");
-				} else {
+			// miolo
+			if (!isBranco(linha[indice], i) || (indice >0 && !isBranco(linha[indice-1], i))){
+				resultado.append("####");
+			} else {
 
-					resultado.append("    ");
-				}	
+				resultado.append("    ");
+			}	
 
-				preencheBordaVertical(linha[indice], resultado, i);
-			}
-
-			resultado.append("\n");
-		}else if(linha.length - 1 == indice){
-			int qtdColunas = linha[indice].length();
+			preencheBordaVertical(linha, indice, resultado, i);
 		}
+
+		resultado.append("\n");
 	}
 
-	public void preencheLinha(String linha, StringBuffer resultado) {
+	public void preencheLinha(String linha[],int indice, StringBuffer resultado) {
 
-		desenhaCanto(linha, resultado);
+		desenhaCantoLinha(linha, indice, resultado);
 
-		for (int i = 0; i < linha.length(); i++) {
+		for (int i = 0; i < linha[indice].length(); i++) {
 
-			if (linha.charAt(i) == 'X') {
+			if (linha[indice].charAt(i) == 'X') {
 				resultado.append("####");
 
 			} else {
 				resultado.append("    ");
 			}
 
-			preencheBordaVertical(linha, resultado, i);
+			preencheBordaVerticalLinha(linha, indice, resultado, i);
 		}
 		resultado.append('\n');
 	}
 
-	private void preencheBordaVertical(String linha, StringBuffer resultado,
-			int i) {
+	private void preencheBordaVertical(String[] linha, int indice, StringBuffer resultado, int i) {
 		// borda (divisoria) desse com o pr�ximo
-		if (!isBranco(linha, i) || (proximoExisteENaoEhBranco(linha, i) )){
+		if (!isBranco(linha[indice], i) || (proximoExisteENaoEhBranco(linha[indice], i) || logoAcimaNaoEhBranco(linha, indice, i))){
 			resultado.append("#");
 		} else {
 			resultado.append(' ');
 		}
+	}
+	
+	private void preencheBordaVerticalLinha(String[] linha, int indice, StringBuffer resultado, int i) {
+		// borda (divisoria) desse com o pr�ximo
+		if (!isBranco(linha[indice], i) || (proximoExisteENaoEhBranco(linha[indice], i))){
+			resultado.append("#");
+		} else {
+			resultado.append(' ');
+		}
+	}
+
+	private boolean logoAcimaNaoEhBranco(String[] linha, int indice, int i) {
+		return ((indice-1 > 0) && (linha[indice-1].charAt(i) != 'B' ));
 	}
 
 	public String preProcessGrid() {
