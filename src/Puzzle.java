@@ -10,18 +10,17 @@ public class Puzzle {
 
 		String[] linhas = contents.replaceAll(" ","").split("\n");
 
-		// tira os espa�os
+		// tira os espaços
 		StringBuffer resultado = new StringBuffer();
 
 		for (int x=0; x<linhas.length; x++){
-			
-			preencheBordaHorizontal(linhas[x], resultado);
-			preencheLinha(linhas[x], resultado);
-			preencheLinha(linhas[x], resultado);
 
+			preencheBordaHorizontal(linhas, x, resultado);
+			preencheLinha(linhas[x], resultado);
+			preencheLinha(linhas[x], resultado);
 		}
 
-		preencheBordaHorizontal(linhas[linhas.length-1], resultado);
+		preencheBordaHorizontal(linhas, linhas.length-1, resultado);
 		return resultado.toString();
 	}
 
@@ -42,38 +41,44 @@ public class Puzzle {
 		return i+1 < linha.length() && linha.charAt(i+1) != 'B';
 	}
 
-	private void preencheBordaHorizontal(String linha, StringBuffer resultado) {
-		
-		desenhaCanto(linha, resultado);
-		
-		int qtdColunas = linha.length();
-		for (int i = 0; i < qtdColunas; i++) {
-			
-			// miolo
-			if (!isBranco(linha, i))
-				resultado.append("####");
-			else
-				resultado.append("    ");
-			
-			preencheBordaVertical(linha, resultado, i);
+	private void preencheBordaHorizontal(String[] linha, int indice, StringBuffer resultado) {
+		if  (indice == 0) {
+			desenhaCanto(linha[indice], resultado);
+
+			int qtdColunas = linha[indice].length();
+
+			for (int i = 0; i < qtdColunas; i++) {
+
+				// miolo
+				if (!isBranco(linha[indice], i)){
+					resultado.append("####");
+				} else {
+
+					resultado.append("    ");
+				}	
+
+				preencheBordaVertical(linha[indice], resultado, i);
+			}
+
+			resultado.append("\n");
+		}else if(linha.length - 1 == indice){
+			int qtdColunas = linha[indice].length();
 		}
-		
-		resultado.append("\n");
 	}
-	
+
 	public void preencheLinha(String linha, StringBuffer resultado) {
-		
+
 		desenhaCanto(linha, resultado);
-		
+
 		for (int i = 0; i < linha.length(); i++) {
-			
+
 			if (linha.charAt(i) == 'X') {
 				resultado.append("####");
-				
+
 			} else {
 				resultado.append("    ");
 			}
-			
+
 			preencheBordaVertical(linha, resultado, i);
 		}
 		resultado.append('\n');
@@ -81,7 +86,7 @@ public class Puzzle {
 
 	private void preencheBordaVertical(String linha, StringBuffer resultado,
 			int i) {
-		// borda (divisoria) desse com o pr�ximo
+		// borda (divisoria) desse com o pr�ximo
 		if (!isBranco(linha, i) || (proximoExisteENaoEhBranco(linha, i) )){
 			resultado.append("#");
 		} else {
@@ -90,7 +95,7 @@ public class Puzzle {
 	}
 
 	public String preProcessGrid() {
-		
+
 		char[][] tabuleiro = montarTabuleiro(contents);
 
 		int maxLin = tabuleiro.length - 1;
@@ -129,9 +134,9 @@ public class Puzzle {
 	}
 
 	private void trocaPraBranco(int linha, int coluna, char [][] tabuleiro) {
-		
+
 		tabuleiro[linha][coluna] = 'B';
-		
+
 		//Verifica direita
 		if (coluna+1 < tabuleiro[linha].length && tabuleiro[linha][coluna+1] == 'X') {
 			trocaPraBranco (linha, coluna+1, tabuleiro);
@@ -154,11 +159,11 @@ public class Puzzle {
 	}
 
 	private char[][] montarTabuleiro(String contents) {
-		
+
 		contents = contents.replace(" ", "");
-		
+
 		String[] linhas = contents.split("\n");
-		
+
 		// monta o tabuleiro de char[][]
 		char[][] tabuleiro = new char[linhas.length][];
 		for (int i = 0; i < linhas.length; i++) {
@@ -168,7 +173,7 @@ public class Puzzle {
 	}
 
 	private String montarResultado(char[][] tabuleiro) {
-		// monta a string de sa�da
+		// monta a string de saída
 		StringBuffer retorno = new StringBuffer();
 		for (int i = 0; i < tabuleiro.length; i++){
 			for (int j = 0 ; j < tabuleiro[0].length ; j++){
