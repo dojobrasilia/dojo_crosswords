@@ -20,12 +20,55 @@ public class Puzzle {
 			preencheLinha(linhas, x, resultado);
 		}
 
-		preencheBordaHorizontal(linhas, linhas.length-1, resultado);
+		preencheBordaHorizontal2(linhas, linhas.length-1, resultado);
 		return resultado.toString();
+	}
+
+	private void preencheBordaHorizontal2(String[] linha, int indice, StringBuffer resultado) {
+		desenhaCanto2(linha, indice, resultado); //lado esquerdo
+
+		int qtdColunas = linha[indice].length();
+
+		for (int i = 0; i < qtdColunas; i++) {
+
+			// miolo
+			if(isBranco(linha[indice], i)){
+				resultado.append("    ");
+			}else{
+				resultado.append("####");
+			}
+			   
+			  
+			
+//			if ((indice == linha.length && !isBranco(linha[indice], i-1)) // da esquerda
+//				|| !isBranco(linha[indice], i)   // esse
+//				|| (indice >0 && !isBranco(linha[indice-1], i) )){
+//				
+//				resultado.append("####");
+//				
+//			} else {
+//
+//				resultado.append("    ");
+//			}	
+			
+			preencheBordaVertical2(linha, indice, resultado, i);
+		}
+
+		resultado.append("\n");
+
+		
 	}
 
 	private void desenhaCanto(String linha[],int indice, StringBuffer resultado) {
 		if (linha[indice].charAt(0) != 'B'  || (indice>0 && linha[indice-1].charAt(0) != 'B'))
+			//preenche a coluna da esquerda
+			resultado.append('#');
+		else
+			resultado.append(' ');
+	}
+
+	private void desenhaCanto2(String linha[],int indice, StringBuffer resultado) {
+		if (linha[indice].charAt(0) != 'B')
 			//preenche a coluna da esquerda
 			resultado.append('#');
 		else
@@ -50,6 +93,7 @@ public class Puzzle {
 	}
 
 	private void preencheBordaHorizontal(String[] linha, int indice, StringBuffer resultado) {
+		
 		desenhaCanto(linha, indice, resultado);
 
 		int qtdColunas = linha[indice].length();
@@ -57,7 +101,7 @@ public class Puzzle {
 		for (int i = 0; i < qtdColunas; i++) {
 
 			// miolo
-			if (!isBranco(linha[indice], i) || (indice >0 && !isBranco(linha[indice-1], i))){
+			if (indice == linha.length && !isBranco(linha[indice], indice-1) || !isBranco(linha[indice], i) || (indice >0 && !isBranco(linha[indice-1], i))){
 				resultado.append("####");
 			} else {
 
@@ -96,6 +140,17 @@ public class Puzzle {
 			resultado.append(' ');
 		}
 	}
+
+
+	private void preencheBordaVertical2(String[] linha, int indice, StringBuffer resultado, int i) {
+		// borda (divisoria) desse com o pr�ximo
+		if (!isBranco(linha[indice], i) || (proximoExisteENaoEhBranco(linha[indice], i))){
+			resultado.append("#");
+		} else {
+			resultado.append(' ');
+		}
+	}
+
 	
 	private void preencheBordaVerticalLinha(String[] linha, int indice, StringBuffer resultado, int i) {
 		// borda (divisoria) desse com o pr�ximo
