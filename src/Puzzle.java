@@ -1,30 +1,20 @@
 
 public class Puzzle {
-	private String contents;
+	private char[][] matrizEntrada;
 
 	public void loadGrid(String grid) {
-		contents = grid;
+		matrizEntrada = montarTabuleiro(grid.replaceAll(" ", ""));
 	}
 
 	public String getCrosswords() {
-
-		// tira os espaços e quebra as linhas
-		String[] linhas = contents.replaceAll(" ","").split("\n");
-		
-		char[][] matrizEntrada = new char[linhas.length][linhas[0].length()];
-		for (int i=0 ; i<matrizEntrada.length ; i++) {
-			for (int j=0 ; j<matrizEntrada[0].length ; j++) {
-				matrizEntrada[i][j] = linhas[i].charAt(j);
-			}
-		}
 		
 		StringBuffer resultado = new StringBuffer();
 
 		for (int x=0; x<matrizEntrada.length; x++){
 
 			preencheBordaHorizontal(matrizEntrada, x, resultado);
-			preencheLinha(matrizEntrada, x, resultado);
-			preencheLinha(matrizEntrada, x, resultado);
+			preencheMioloLinha(matrizEntrada, x, resultado);
+			preencheMioloLinha(matrizEntrada, x, resultado);
 		}
 
 		preencheBordaHorizontalBottom(matrizEntrada, matrizEntrada.length-1, resultado);
@@ -33,7 +23,7 @@ public class Puzzle {
 
 	private void preencheBordaHorizontalBottom(char[][] matriz, int indiceLinha, StringBuffer resultado) {
 		
-		desenhaCantinhoEsquerdoInferior(matriz, indiceLinha, resultado); //lado esquerdo
+		desenhaCantoLinha(matriz, indiceLinha, resultado); //lado esquerdo
 
 		int qtdColunas = matriz[indiceLinha].length;
 		
@@ -41,7 +31,7 @@ public class Puzzle {
 		for (int indiceColuna = 0; indiceColuna < qtdColunas; indiceColuna++) {
 
 			// miolo
-			if(isBranco(matriz[indiceLinha], indiceColuna)){
+			if(isBranco(matriz, indiceLinha, indiceColuna)){
 				resultado.append("    ");
 			}else{
 				resultado.append("####");
@@ -62,14 +52,6 @@ public class Puzzle {
 		else
 			resultado.append(' ');
 	}
-
-	private void desenhaCantinhoEsquerdoInferior(char[][] matriz,int indice, StringBuffer resultado) {
-		if (matriz[indice][0] != 'B')
-			//preenche a coluna da esquerda
-			resultado.append('#');
-		else
-			resultado.append(' ');
-	}
 	
 	private void desenhaCantoLinha(char[][] matriz,int indice, StringBuffer resultado) {
 		if (matriz[indice][0] != 'B' )
@@ -79,13 +61,12 @@ public class Puzzle {
 			resultado.append(' ');
 	}
 
-
-	private boolean isBranco(char[] linha, int i) {
-		return linha[i] == 'B';
+	private boolean isBranco(char[][] matriz, int linha, int coluna) {
+		return matriz[linha][coluna] == 'B';
 	}
 
-	private boolean proximoExisteENaoEhBranco(char[] linha, int i) {
-		return i+1 < linha.length && linha[i+1] != 'B';
+	private boolean proximoExisteENaoEhBranco(char[][] matriz, int linha, int coluna) {
+		return coluna+1 < matriz[linha].length && matriz[linha][coluna+1] != 'B';
 	}
 
 	private void preencheBordaHorizontal(char[][] matriz, int indice, StringBuffer resultado) {
@@ -97,7 +78,8 @@ public class Puzzle {
 		for (int i = 0; i < qtdColunas; i++) {
 
 			// miolo
-			if (indice == matriz.length && !isBranco(matriz[indice], indice-1) || !isBranco(matriz[indice], i) || (indice >0 && !isBranco(matriz[indice-1], i))){
+			// FIXME indice, indice-1 ????
+			if (indice == matriz.length && !isBranco(matriz, indice, indice-1) || !isBranco(matriz, indice, i) || (indice >0 && !isBranco(matriz, indice-1, i))){
 				resultado.append("####");
 			} else {
 
@@ -110,7 +92,7 @@ public class Puzzle {
 		resultado.append("\n");
 	}
 
-	public void preencheLinha(char[][] matriz,int indice, StringBuffer resultado) {
+	public void preencheMioloLinha(char[][] matriz,int indice, StringBuffer resultado) {
 
 		desenhaCantoLinha(matriz, indice, resultado);
 
@@ -130,7 +112,7 @@ public class Puzzle {
 
 	private void preencheBordaVertical(char[][] matriz, int indice, StringBuffer resultado, int i) {
 		// borda (divisoria) desse com o prÔøΩximo
-		if (!isBranco(matriz[indice], i) || (proximoExisteENaoEhBranco(matriz[indice], i) || logoAcimaNaoEhBranco(matriz, indice, i))){
+		if (!isBranco(matriz, indice, i) || (proximoExisteENaoEhBranco(matriz, indice, i) || logoAcimaNaoEhBranco(matriz, indice, i))){
 			resultado.append("#");
 		} else {
 			resultado.append(' ');
@@ -140,7 +122,7 @@ public class Puzzle {
 
 	private void preencheBordaVerticalBottom(char[][] matriz, int indice, StringBuffer resultado, int i) {
 		// borda (divisoria) desse com o prÔøΩximo
-		if (!isBranco(matriz[indice], i) || (proximoExisteENaoEhBranco(matriz[indice], i))){
+		if (!isBranco(matriz, indice, i) || (proximoExisteENaoEhBranco(matriz, indice, i))){
 			resultado.append("#");
 		} else {
 			resultado.append(' ');
@@ -150,7 +132,7 @@ public class Puzzle {
 	
 	private void preencheBordaVerticalLinha(char[][] matriz, int indice, StringBuffer resultado, int i) {
 		// borda (divisoria) desse com o prÔøΩximo
-		if (!isBranco(matriz[indice], i) || (proximoExisteENaoEhBranco(matriz[indice], i))){
+		if (!isBranco(matriz, indice, i) || (proximoExisteENaoEhBranco(matriz, indice, i))){
 			resultado.append("#");
 		} else {
 			resultado.append(' ');
@@ -162,42 +144,39 @@ public class Puzzle {
 	}
 
 	public String preProcessGrid() {
-
-		char[][] tabuleiro = montarTabuleiro(contents);
-
-		int maxLin = tabuleiro.length - 1;
-		int maxCol = tabuleiro[0].length - 1;
+		int maxLin = matrizEntrada.length - 1;
+		int maxCol = matrizEntrada[0].length - 1;
 
 		//recursivo
 		//primeira linha
 		for (int x = 0; x < maxCol; x++) {
-			if (tabuleiro[0][x] == 'X') {
-				trocaPraBranco(0, x, tabuleiro);
+			if (matrizEntrada[0][x] == 'X') {
+				trocaPraBranco(0, x, matrizEntrada);
 			}
 		}
 
 		//ultima linha
 		for (int x = 0; x < maxCol; x++) {
-			if (tabuleiro[maxLin][x] == 'X') {
-				trocaPraBranco(maxLin, x, tabuleiro);
+			if (matrizEntrada[maxLin][x] == 'X') {
+				trocaPraBranco(maxLin, x, matrizEntrada);
 			}
 		}
 
 		//primeira coluna
 		for (int x = 0; x < maxLin; x++) {
-			if (tabuleiro[x][0] == 'X') {
-				trocaPraBranco(x, 0, tabuleiro);
+			if (matrizEntrada[x][0] == 'X') {
+				trocaPraBranco(x, 0, matrizEntrada);
 			}
 		}
 
 		//ultima coluna
 		for (int x = 0; x < maxLin; x++) {
-			if (tabuleiro[x][maxCol] == 'X') {
-				trocaPraBranco(x, maxCol, tabuleiro);
+			if (matrizEntrada[x][maxCol] == 'X') {
+				trocaPraBranco(x, maxCol, matrizEntrada);
 			}
 		}
 
-		return montarResultado(tabuleiro);
+		return montarResultado(matrizEntrada);
 	}
 
 	private void trocaPraBranco(int linha, int coluna, char [][] tabuleiro) {
