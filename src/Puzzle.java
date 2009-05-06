@@ -22,6 +22,30 @@ public class Puzzle {
 		return resultado.toString();
 	}
 
+	private void preencheBordaHorizontal(int indiceLinha) {
+		
+		desenhaCanto(indiceLinha);
+
+		int qtdColunas = matrizEntrada[indiceLinha].length;
+
+		for (int indiceColuna = 0; indiceColuna < qtdColunas; indiceColuna++) {
+
+			// miolo
+			if (	!isBranco(indiceLinha, indiceColuna) // esse n‹o Ž branco
+					|| (indiceLinha >0 && !isBranco(indiceLinha-1, indiceColuna)) ){ // o de cima n‹o Ž branco
+				
+				resultado.append("####");
+			} else {
+
+				resultado.append("    ");
+			}	
+
+			preencheBordaVertical(indiceLinha, indiceColuna);
+		}
+
+		resultado.append("\n");
+	}
+	
 	private void preencheBordaHorizontalBottom(int indiceLinha) {
 		
 		desenhaCantoLinha(indiceLinha); //lado esquerdo
@@ -32,10 +56,10 @@ public class Puzzle {
 		for (int indiceColuna = 0; indiceColuna < qtdColunas; indiceColuna++) {
 
 			// miolo
-			if(isBranco(indiceLinha, indiceColuna)){
-				resultado.append("    ");
-			}else{
+			if(!isBranco(indiceLinha, indiceColuna)){ // esse n‹o Ž branco
 				resultado.append("####");
+			}else{
+				resultado.append("    ");
 			}
 						
 			preencheBordaVerticalLinha(indiceLinha, indiceColuna);
@@ -70,28 +94,7 @@ public class Puzzle {
 		return coluna+1 < matrizEntrada[linha].length && matrizEntrada[linha][coluna+1] != 'B';
 	}
 
-	private void preencheBordaHorizontal(int indice) {
-		
-		desenhaCanto(indice);
 
-		int qtdColunas = matrizEntrada[indice].length;
-
-		for (int i = 0; i < qtdColunas; i++) {
-
-			// miolo
-			// FIXME indice, indice-1 ????
-			if (indice == matrizEntrada.length && !isBranco(indice, indice-1) || !isBranco(indice, i) || (indice >0 && !isBranco(indice-1, i))){
-				resultado.append("####");
-			} else {
-
-				resultado.append("    ");
-			}	
-
-			preencheBordaVertical(indice, i);
-		}
-
-		resultado.append("\n");
-	}
 
 	public void preencheMioloLinha(int indice) {
 
