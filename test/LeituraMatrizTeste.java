@@ -140,7 +140,9 @@ public class LeituraMatrizTeste {
 		puzzle.loadGrid("X _ \n"
 					   +"_ X \n");
 		
-		Assert.assertEquals(puzzle.getCrosswords()+"", esperado, puzzle.getCrosswords());
+		String crosswords = puzzle.getCrosswords();
+		
+		Assert.assertEquals(crosswords+"", esperado, crosswords);
 	}
 	
 	@Test
