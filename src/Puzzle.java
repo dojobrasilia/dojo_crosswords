@@ -71,7 +71,8 @@ public class Puzzle {
 	}
 
 	private void desenhaCanto(int indice) {
-		if (matrizEntrada[indice][0] != 'B'  || (indice>0 && matrizEntrada[indice-1][0] != 'B'))
+		if (matrizEntrada[indice][0] != 'B' //Ve se a primeira casa da linha tem borda  
+			|| (indice>0 && matrizEntrada[indice-1][0] != 'B')) //Se nao eh o primeiro e a linha anterior tem borda 
 			//preenche a coluna da esquerda
 			resultado.append('#');
 		else
