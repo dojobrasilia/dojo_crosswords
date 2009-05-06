@@ -37,7 +37,7 @@ public class Puzzle {
 				resultado.append("####");
 			}
 						
-			preencheBordaVerticalBottom(matriz, indiceLinha, resultado, indiceColuna);
+			preencheBordaVerticalLinha(matriz, indiceLinha, resultado, indiceColuna);
 		}
 
 		resultado.append("\n");
@@ -118,17 +118,6 @@ public class Puzzle {
 			resultado.append(' ');
 		}
 	}
-
-
-	private void preencheBordaVerticalBottom(char[][] matriz, int indice, StringBuffer resultado, int i) {
-		// borda (divisoria) desse com o pr�ximo
-		if (!isBranco(matriz, indice, i) || (proximoExisteENaoEhBranco(matriz, indice, i))){
-			resultado.append("#");
-		} else {
-			resultado.append(' ');
-		}
-	}
-
 	
 	private void preencheBordaVerticalLinha(char[][] matriz, int indice, StringBuffer resultado, int i) {
 		// borda (divisoria) desse com o pr�ximo
