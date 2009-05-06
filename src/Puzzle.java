@@ -11,11 +11,11 @@ public class Puzzle {
 	public String getCrosswords() {
 		resultado = new StringBuilder();
 		
-		for (int x=0; x<matrizEntrada.length; x++){
+		for (int indiceLinha=0; indiceLinha<matrizEntrada.length; indiceLinha++){
 
-			preencheBordaHorizontal(x);
-			preencheMioloLinha(x);
-			preencheMioloLinha(x);
+			preencheBordaHorizontal(indiceLinha);
+			preencheMioloLinha(indiceLinha);
+			preencheMioloLinha(indiceLinha);
 		}
 
 		preencheBordaHorizontalBottom(matrizEntrada.length-1);
@@ -46,8 +46,8 @@ public class Puzzle {
 		
 	}
 
-	private void desenhaCanto(char matriz[][],int indice) {
-		if (matriz[indice][0] != 'B'  || (indice>0 && matriz[indice-1][0] != 'B'))
+	private void desenhaCanto(int indice) {
+		if (matrizEntrada[indice][0] != 'B'  || (indice>0 && matrizEntrada[indice-1][0] != 'B'))
 			//preenche a coluna da esquerda
 			resultado.append('#');
 		else
@@ -72,7 +72,7 @@ public class Puzzle {
 
 	private void preencheBordaHorizontal(int indice) {
 		
-		desenhaCanto(matrizEntrada, indice);
+		desenhaCanto(indice);
 
 		int qtdColunas = matrizEntrada[indice].length;
 
@@ -112,7 +112,7 @@ public class Puzzle {
 	}
 
 	private void preencheBordaVertical(int indice, int i) {
-		// borda (divisoria) desse com o pr�ximo
+		// borda (divisoria) desse com o proximo
 		if (!isBranco(indice, i) || (proximoExisteENaoEhBranco(indice, i) || logoAcimaNaoEhBranco(indice, i))){
 			resultado.append("#");
 		} else {
