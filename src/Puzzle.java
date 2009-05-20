@@ -18,7 +18,7 @@ public class Puzzle {
 			preencheMioloLinha(indiceLinha);
 		}
 
-		preencheBordaHorizontalBottom(matrizEntrada.length-1);
+		preencheBordaHorizontalBottom(matrizEntrada.length);
 		return resultado.toString();
 	}
 
@@ -48,21 +48,21 @@ public class Puzzle {
 	
 	private void preencheBordaHorizontalBottom(int indiceLinha) {
 		
-		desenhaCantoLinha(indiceLinha); //lado esquerdo
+		desenhaCanto(indiceLinha); //lado esquerdo
 
-		int qtdColunas = matrizEntrada[indiceLinha].length;
+		int qtdColunas = matrizEntrada[0].length;
 		
 		// para cada coluna
 		for (int indiceColuna = 0; indiceColuna < qtdColunas; indiceColuna++) {
 
 			// miolo
-			if(!isBranco(indiceLinha, indiceColuna)){ // esse n‹o Ž branco
+			if(hasBorda(indiceLinha-1, indiceColuna)){ // esse n‹o Ž branco
 				resultado.append("####");
 			}else{
 				resultado.append("    ");
 			}
 						
-			preencheBordaVerticalLinha(indiceLinha, indiceColuna);
+			preencheBordaVerticalLinha(indiceLinha-1, indiceColuna);
 		}
 
 		resultado.append("\n");
@@ -71,8 +71,7 @@ public class Puzzle {
 	}
 
 	private void desenhaCanto(int indice) {
-		if (matrizEntrada[indice][0] != 'B' //Ve se a primeira casa da linha tem borda  
-			|| (indice>0 && matrizEntrada[indice-1][0] != 'B')) //Se nao eh o primeiro e a linha anterior tem borda 
+		if (hasBorda(indice, 0) || hasBorda(indice-1,0))
 			//preenche a coluna da esquerda
 			resultado.append('#');
 		else
@@ -80,13 +79,19 @@ public class Puzzle {
 	}
 	
 	private void desenhaCantoLinha(int indice) {
-		if (matrizEntrada[indice][0] != 'B' )
+		if (!isBranco(indice,0))
 			//preenche a coluna da esquerda
 			resultado.append('#');
 		else
 			resultado.append(' ');
 	}
 
+	private boolean hasBorda(int linha, int coluna) {
+		return (linha >= 0) && (linha < matrizEntrada.length) &&
+		(coluna >= 0) && (coluna < matrizEntrada[0].length) &&
+		!isBranco(linha, coluna);
+	}
+	
 	private boolean isBranco(int linha, int coluna) {
 		return matrizEntrada[linha][coluna] == 'B';
 	}
