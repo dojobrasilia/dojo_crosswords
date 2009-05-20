@@ -18,7 +18,7 @@ public class Puzzle {
 			preencheMioloLinha(indiceLinha);
 		}
 
-		preencheBordaHorizontalBottom(matrizEntrada.length);
+		preencheBordaHorizontal(matrizEntrada.length);
 		return resultado.toString();
 	}
 
@@ -26,13 +26,13 @@ public class Puzzle {
 		
 		desenhaCanto(indiceLinha);
 
-		int qtdColunas = matrizEntrada[indiceLinha].length;
+		int qtdColunas = matrizEntrada[0].length;
 
 		for (int indiceColuna = 0; indiceColuna < qtdColunas; indiceColuna++) {
 
 			// miolo
-			if (	!isBranco(indiceLinha, indiceColuna) // esse n‹o Ž branco
-					|| (indiceLinha >0 && !isBranco(indiceLinha-1, indiceColuna)) ){ // o de cima n‹o Ž branco
+			if (	hasBorda(indiceLinha, indiceColuna) // esse n‹o Ž branco
+					|| (indiceLinha >0 && hasBorda(indiceLinha-1, indiceColuna)) ){ // o de cima n‹o Ž branco
 				
 				resultado.append("####");
 			} else {
@@ -46,30 +46,6 @@ public class Puzzle {
 		resultado.append("\n");
 	}
 	
-	private void preencheBordaHorizontalBottom(int indiceLinha) {
-		
-		desenhaCanto(indiceLinha); //lado esquerdo
-
-		int qtdColunas = matrizEntrada[0].length;
-		
-		// para cada coluna
-		for (int indiceColuna = 0; indiceColuna < qtdColunas; indiceColuna++) {
-
-			// miolo
-			if(hasBorda(indiceLinha-1, indiceColuna)){ // esse n‹o Ž branco
-				resultado.append("####");
-			}else{
-				resultado.append("    ");
-			}
-						
-			preencheBordaVerticalLinha(indiceLinha-1, indiceColuna);
-		}
-
-		resultado.append("\n");
-
-		
-	}
-
 	private void desenhaCanto(int indice) {
 		if (hasBorda(indice, 0) || hasBorda(indice-1,0))
 			//preenche a coluna da esquerda
@@ -87,12 +63,6 @@ public class Puzzle {
 	private boolean isBranco(int linha, int coluna) {
 		return matrizEntrada[linha][coluna] == 'B';
 	}
-
-	private boolean proximoExisteENaoEhBranco(int linha, int coluna) {
-		return coluna+1 < matrizEntrada[linha].length && matrizEntrada[linha][coluna+1] != 'B';
-	}
-
-
 
 	public void preencheMioloLinha(int indice) {
 
@@ -119,7 +89,7 @@ public class Puzzle {
 
 	private void preencheBordaVertical(int indice, int i) {
 		// borda (divisoria) desse com o proximo
-		if (!isBranco(indice, i) || (proximoExisteENaoEhBranco(indice, i) || logoAcimaNaoEhBranco(indice, i))){
+		if (hasBorda(indice, i) || hasBorda(indice, i+1) || hasBorda(indice-1, i) || hasBorda(indice-1, i+1)){
 			resultado.append("#");
 		} else {
 			resultado.append(' ');
@@ -128,15 +98,11 @@ public class Puzzle {
 	
 	private void preencheBordaVerticalLinha(int indice, int i) {
 		// borda (divisoria) desse com o proximo
-		if (!isBranco(indice, i) || (proximoExisteENaoEhBranco(indice, i))){
+		if (hasBorda(indice, i) || hasBorda(indice, i+1)){
 			resultado.append("#");
 		} else {
 			resultado.append(' ');
 		}
-	}
-
-	private boolean logoAcimaNaoEhBranco(int indice, int i) {
-		return ((indice-1 > 0) && (matrizEntrada[indice-1][i] != 'B' ));
 	}
 
 	public String preProcessGrid() {
