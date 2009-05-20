@@ -31,16 +31,14 @@ public class Puzzle {
 		for (int indiceColuna = 0; indiceColuna < qtdColunas; indiceColuna++) {
 
 			// miolo
-			if (	hasBorda(indiceLinha, indiceColuna) // esse n‹o Ž branco
-					|| (indiceLinha >0 && hasBorda(indiceLinha-1, indiceColuna)) ){ // o de cima n‹o Ž branco
+			if (hasBorda(indiceLinha, indiceColuna) || hasBorda(indiceLinha-1, indiceColuna) ){ // o de cima n‹o Ž branco
 				
 				resultado.append("####");
 			} else {
-
 				resultado.append("    ");
 			}	
 
-			preencheBordaVertical(indiceLinha, indiceColuna);
+			preencheEncruzilhada(indiceLinha, indiceColuna);
 		}
 
 		resultado.append("\n");
@@ -56,15 +54,11 @@ public class Puzzle {
 	
 	private boolean hasBorda(int linha, int coluna) {
 		return (linha >= 0) && (linha < matrizEntrada.length) &&
-		(coluna >= 0) && (coluna < matrizEntrada[0].length) &&
-		!isBranco(linha, coluna);
+			(coluna >= 0) && (coluna < matrizEntrada[0].length) &&
+			matrizEntrada[linha][coluna] != 'B';
 	}
 	
-	private boolean isBranco(int linha, int coluna) {
-		return matrizEntrada[linha][coluna] == 'B';
-	}
-
-	public void preencheMioloLinha(int indice) {
+	private void preencheMioloLinha(int indice) {
 
 		if (hasBorda(indice,0))
 			//preenche a coluna da esquerda
@@ -72,22 +66,18 @@ public class Puzzle {
 		else
 			resultado.append(' ');
 
-
 		for (int i = 0; i < matrizEntrada[indice].length; i++) {
-
 			if (matrizEntrada[indice][i] == 'X') {
 				resultado.append("####");
-
 			} else {
 				resultado.append("    ");
 			}
-
-			preencheBordaVerticalLinha(indice, i);
+			preencheBordaVertical(indice, i);
 		}
 		resultado.append('\n');
 	}
 
-	private void preencheBordaVertical(int indice, int i) {
+	private void preencheEncruzilhada(int indice, int i) {
 		// borda (divisoria) desse com o proximo
 		if (hasBorda(indice, i) || hasBorda(indice, i+1) || hasBorda(indice-1, i) || hasBorda(indice-1, i+1)){
 			resultado.append("#");
@@ -96,7 +86,7 @@ public class Puzzle {
 		}
 	}
 	
-	private void preencheBordaVerticalLinha(int indice, int i) {
+	private void preencheBordaVertical(int indice, int i) {
 		// borda (divisoria) desse com o proximo
 		if (hasBorda(indice, i) || hasBorda(indice, i+1)){
 			resultado.append("#");
