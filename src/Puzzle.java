@@ -78,14 +78,6 @@ public class Puzzle {
 			resultado.append(' ');
 	}
 	
-	private void desenhaCantoLinha(int indice) {
-		if (!isBranco(indice,0))
-			//preenche a coluna da esquerda
-			resultado.append('#');
-		else
-			resultado.append(' ');
-	}
-
 	private boolean hasBorda(int linha, int coluna) {
 		return (linha >= 0) && (linha < matrizEntrada.length) &&
 		(coluna >= 0) && (coluna < matrizEntrada[0].length) &&
@@ -104,7 +96,12 @@ public class Puzzle {
 
 	public void preencheMioloLinha(int indice) {
 
-		desenhaCantoLinha(indice);
+		if (hasBorda(indice,0))
+			//preenche a coluna da esquerda
+			resultado.append('#');
+		else
+			resultado.append(' ');
+
 
 		for (int i = 0; i < matrizEntrada[indice].length; i++) {
 
